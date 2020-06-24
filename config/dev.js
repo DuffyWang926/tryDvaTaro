@@ -5,7 +5,9 @@ module.exports = {
   },
   defineConstants: {},
   mini: {},
-  h5: {},
+  h5: {
+    esnextModules: ['taro-ui']
+  },
   alias: {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),

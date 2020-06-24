@@ -1,0 +1,16 @@
+@import "~taro-ui/dist/style/components/tabs.scss";
+.logIn{
+    padding:0 30rpx;
+    overflow: hidden;
+   .register{
+       float: right;
+       color:#fff;
+       padding:10px 0 0 0;
+
+   } 
+   .logInCon{
+       margin:150rpx 0 0 0;
+       border:1px solid transparent;
+       border-radius: 5rpx;
+   }
+}

@@ -1,4 +1,4 @@
-import Taro, { PureComponent } from '@tarojs/taro'
+import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './index.scss'
 
@@ -34,12 +34,13 @@ const mapDispatchToProps = (dispatch) => {
 };
 @connect(mapStateToProps, mapDispatchToProps)
 
-export default class Index extends PureComponent {
+export default class Index extends Component {
 
   componentWillMount () { }
 
   componentDidMount () { 
-    // this.props.getUserData && this.props.getUserData({id:'11'})
+    this.props.getUserData && this.props.getUserData({id:'11'})
+    // this.props.getUserDataAction && this.props.getUserDataAction({id:'11'})
     
   }
 
@@ -53,10 +54,19 @@ export default class Index extends PureComponent {
     navigationBarTitleText: '首页'
   }
 
+  onLogInClick = e =>{
+    Taro.navigateTo({
+      url: e.currentTarget.dataset.url,
+    });
+  }
+
   render () {
     return (
       <View className='index'>
-        <Text>Hello world!</Text>
+        <Text
+          data-url="/pages/logIn/index"
+          onClick={this.onLogInClick}
+        >user world!</Text>
       </View>
     )
   }

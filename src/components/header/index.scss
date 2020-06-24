@@ -1,0 +1,10 @@
+@import '@/assets/sass/custom.scss';
+.header{
+    background: $bgOrange;
+    width:100%;
+    height:300rpx;
+    z-index: -1;
+    position: absolute;
+    left:0;
+    top:0;
+}
