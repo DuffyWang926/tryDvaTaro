@@ -1,3 +1,7 @@
+import { logInData } from '@/api/index';
+import { confirmData } from '@/utils'
+import { logInModel} from '@/model'
+
 export default {
     namespace: 'global',
     state: {
@@ -6,12 +10,15 @@ export default {
         Storage:[]
     },
     effects: {
-      *getUserata({ payload }, { call, put }) {
+      *getUserData({ payload }, { call, put }) {
+        
+          const res = yield call(logInData, payload)
+          confirmData(logInModel,res)
         
       },
     },
     reducers: {
-        getCommandAction(state, action) {
+        getUserDataAction(state, action) {
         const { Networking, Servers, Storage} = action.payload ;
         return { ...state, Networking, Servers, Storage};
         }

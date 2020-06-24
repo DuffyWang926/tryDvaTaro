@@ -18,9 +18,15 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     
-    getNavData: (query) => {
+    getUserData: (query) => {
       dispatch({
-        type: `${namespace}/getCommandAction`,
+        type: `${namespace}/getUserData`,
+        payload: query,
+      });
+    },
+    getUserDataAction: (query) => {
+      dispatch({
+        type: `${namespace}/getUserDataAction`,
         payload: query,
       });
     }
@@ -33,7 +39,9 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () { 
-    this.props.getNavData && this.props.getNavData({})
+    this.props.getUserData && this.props.getUserData({id:'11'})
+    // this.props.getUserDataAction && this.props.getUserDataAction({id:'11'})
+    
   }
 
   componentWillUnmount () { }
