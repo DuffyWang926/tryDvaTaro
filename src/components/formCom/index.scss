@@ -1,2 +1,40 @@
-// @import '@/assets/sass/custom.scss';
+@import '@/assets/sass/custom.scss';
 @import "~taro-ui/dist/style/components/form.scss";
+.taroForm{
+    padding:10rpx;
+    height: 100%;
+    position: relative;
+    .itemList{
+        flex:1;
+        height: 100%;
+        padding-bottom: 120rpx;
+        box-sizing: border-box;
+        display:flex;
+        flex-direction: column;
+        align-content: space-between;
+        justify-content: space-between;
+        form-item{
+            flex:1;
+            display:flex;
+            align-items: center;
+        }
+
+    }
+    .formBtm{
+        display: flex;
+        min-height:100rpx;
+        padding-bottom: 20rpx;
+        width: 100%;
+        position: absolute;
+        bottom:0;
+        left: 0;
+        .formBtn{
+            flex:1;
+            background:$bgOrange;
+            color:#fff;
+            margin:10rpx;
+            border-radius: 40rpx;
+            
+        }
+    }
+}

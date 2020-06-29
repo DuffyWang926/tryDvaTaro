@@ -1,0 +1,45 @@
+@import '@/assets/sass/custom.scss';
+@import '@/assets/sass/global.scss';
+@import "~taro-ui/dist/style/components/form.scss";
+.formItem{
+    display:flex;
+    padding:10rpx 10rpx  0;
+    width:100%;
+    box-sizing: border-box;
+    .requiredText{
+        color:$colorRed;
+        padding:0 10rpx;
+        width:20rpx;
+    }
+    .inputCon{
+        flex:1;
+        .inputItem{
+            display: flex;
+            border-bottom:1rpx solid gainsboro;
+            padding-top: 6rpx;
+            
+        }
+        .tipDiv{
+            font-size: $smallSize;
+            color: $colorRed;
+            min-height: 45rpx;
+        }
+
+    }
+    
+    .end{
+        .endBtn{
+            border-radius: 10rpx;
+            margin-left:6rpx;
+           
+
+        }
+    }
+
+    .btnOrange{
+        color:$bgOrange;
+        border:1rpx solid $bgOrange;
+        font-size: $normalSize ;
+        
+    }
+}

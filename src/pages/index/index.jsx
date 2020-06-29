@@ -8,7 +8,7 @@ import { connect } from '@tarojs/redux'
 const namespace = 'global'
 
 const mapStateToProps = (state) => {
-  console.log( state, 'global state')
+  // console.log( state, 'global state')
   return {
     ...state[namespace],
     
