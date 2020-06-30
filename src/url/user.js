@@ -1,2 +1,5 @@
 //logIn url
-export const logInUrl = '/sso/simpleui/v1/sso/catalog';
+export const getUserUrl = '/live/liveLoginRegis/auth';
+export const verifyCodeUrl = '/loginregis/loginSendCodes';
+export const logInDataUrl = '/live/liveLoginRegis/phonelogin';
+export const getMemberLogInUrl = '/live/liveLoginRegis/memberlogin';

@@ -2,19 +2,23 @@ import Taro, { Component , useState, useEffect} from '@tarojs/taro'
 import {  AtInput} from 'taro-ui'
 import { View, Text, Button } from '@tarojs/components'
 import './index.scss'
-import { isPhone,} from '@/utils/validateData'
+import { isPhone } from '@/utils/validateData'
+import { countTime } from '@/utils/confirmData'
 const initialState = {
-  comType:'input',
-  name:'phoneNum',
-  placeholder:'请输入手机号码',
+  comType:'',
+  name:'',
+  placeholder:'',
   rules:{
-    required:true
+    required:false
   },
   value:'',
+  time: 59
+  
 }
 export default function FormItem (props){
   const [state, setState] = useState(initialState);
   const [isTip, setTip] = useState(false);
+  const [isEndBtn, setIsEndBtn] = useState(false);
   const { 
           comType, 
           name,
@@ -23,18 +27,16 @@ export default function FormItem (props){
           placeholder, 
           type, 
           rules = {}, 
-          inputType , 
+          comSubType , 
           index, 
           endData = {}, 
-          
         } = props
-  const { required, message } = rules
+  const { required, message } = rules 
   const { endType,  endTxt,  endColor } = endData
 
   useEffect(() =>{
-    setState({
-      value:formValue
-    })
+    let res = { ...state, value: formValue}
+    setState(res)
 
   },[ formValue])
 
@@ -46,12 +48,30 @@ export default function FormItem (props){
   function validateData(){
     const { value } = state
     let isTip = false
+    debugger
     switch(type){
       case 'phone':
         isTip = !isPhone(value)
+        break;
+      case 'password':
+        if(!value){
+          isTip = true
+        }
+        break;
+      case 'confirmPasswword':
+        if(!value){
+          isTip = true
+        }
+        break;
+      case 'auto':
+        if(!value){
+          isTip = true
+        }
+        break;
       default:
         break;
     }
+    
     setTip(isTip)
     return isTip
   }
@@ -59,26 +79,46 @@ export default function FormItem (props){
   
    function handleChange (value) {
     setState({
+      ...state,
       value
     })
   }
 
   function handleBlur(value){
     const { getItemData } = props
+    let isValid = false
 
     if(required){
-      let isValid = !validateData(value)
-      getItemData && getItemData(value, index, isValid)
-    } 
-    
-
-
+      isValid = !validateData(value)
+    }else{
+      isValid = true
+    }
+    getItemData && getItemData(value, index, isValid)
   }
 
-  function handleEndClick () {
+  function  handleEndClick () {
     const { handleEndClick } = props
     handleEndClick && handleEndClick(index)
+    if(endType == 'btn'){
+      setIsEndBtn(true)
+      let cb = () =>{
+        setIsEndBtn(false)
+        setState({...state,time:59})
+      }
+
+        countTime(countNum,cb,1)
+    }
+
+
   }
+  
+  let num = state.time
+  function countNum(){
+    num = num -1
+    setState({...state,time:num})
+    return num
+  }
+
   
   return (
     <View className='formItem'>
@@ -92,7 +132,7 @@ export default function FormItem (props){
             { title && <Text>{title}</Text>}
             <AtInput 
               name='value' 
-              type={inputType} 
+              type={comSubType} 
               placeholder={ placeholder }
               value={state.value} 
               onChange={(e) => handleChange(e)}
@@ -120,12 +160,24 @@ export default function FormItem (props){
         <View className='end'>
           {
             endType == 'btn' &&
-            <Button 
-              className={endColorStyle}
-              onClick={() => handleEndClick()}
-            >
-              {endTxt}
-            </Button>
+            <View>
+              { isEndBtn ? 
+                <Button 
+                  className={endColorStyle}
+                >
+                  {state.time}s重新发送
+                </Button>
+                :
+                <Button 
+                  className={endColorStyle}
+                  onClick={() => handleEndClick()}
+                >
+                  {endTxt}
+                </Button>
+              }
+
+            </View>
+            
           }
         </View>
       }

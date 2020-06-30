@@ -1,13 +1,41 @@
 import request from '@/utils/request';
-import {logInUrl} from '@/url/index'
-import _ from 'lodash';
+import { 
+          getUserUrl, 
+          verifyCodeUrl, 
+          logInDataUrl,
+          getMemberLogInUrl
+        } from '@/url/index'
 
-export async function logInData(payload) {
-  let params = payload.params || {}
+export async function getUserDataApi(payload) {
   return request({
-    url:logInUrl,
-    params:params,
-    method:'get'
+    url:getUserUrl,
+    data:payload,
+    method:'post'
   });
- 
 }
+
+export async function getVerifyCodeData(payload) {
+  return request({
+    url:verifyCodeUrl,
+    data:payload,
+    method:'post'
+  });
+}
+
+export async function getLogInData(payload) {
+  return request({
+    url:logInDataUrl,
+    data:payload,
+    method:'post'
+  });
+}
+
+export async function getMemberLogInData(payload) {
+  return request({
+    url:getMemberLogInUrl,
+    data:payload,
+    method:'post'
+  });
+}
+
+

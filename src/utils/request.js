@@ -14,10 +14,10 @@ const parseJSON = (response) => {
 };
 
 
-const request_data = {
-  platform: 'wap',
-  rent_mode: 2,
-};
+// const request_data = {
+//   platform: 'wap',
+//   rent_mode: 2,
+// };
 
 export default (options = { method: 'GET', data: {} }) => {
   if (!noConsole) {
@@ -30,7 +30,7 @@ export default (options = { method: 'GET', data: {} }) => {
   return Taro.request({
     url: baseUrl + options.url,
     data: {
-      ...request_data,
+      // ...request_data,
       ...options.data,
     },
     header: {
@@ -47,8 +47,9 @@ export default (options = { method: 'GET', data: {} }) => {
         );
       }
       if (data.status !== 'ok') {
+        let message = res.data && res.data.error && res.data.error.message || 'error'
         Taro.showToast({
-          title: `${res.data.error.message}~` || res.data.error.code,
+          title: `${message}~`,
           icon: 'none',
           mask: true,
         });

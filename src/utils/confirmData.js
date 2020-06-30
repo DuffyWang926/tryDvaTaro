@@ -16,3 +16,38 @@ export const confirmData = (model, data) =>{
 
 
 }
+
+export const cloneDeep = (data) =>{
+    return data
+}
+
+export const countTime = (fn,cb,n) =>{
+    let startTime = new Date().getTime();
+    let count = 0;
+    function fixed() {
+        count++;
+        let offset = new Date().getTime() - (startTime + count * n * 1000);
+        let nextTime = 1000 - offset;
+        if (nextTime < 0) nextTime = 0;
+        let res = fn && fn()
+        let timeTwo = setTimeout(fixed, nextTime);
+        if(res <= 0){
+          clearTimeout(t)
+          clearTimeout(timeTwo)
+          cb()
+          return false
+        }
+    }
+    let t = setTimeout(fixed, n * 1000);
+
+  }
+
+  function * throttle(func, time) {
+    let timerID = null;
+    function throttled(arg) {
+      clearTimeout(timerID);
+      timerID = setTimeout(func.bind(window, arg), time);
+    }
+    while (true)
+      throttled(yield);
+  }

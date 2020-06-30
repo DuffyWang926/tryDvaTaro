@@ -3,11 +3,9 @@ import { View, Text, Button } from '@tarojs/components'
 import { AtTabs, AtTabsPane,  } from 'taro-ui'
 import './index.scss'
 import { isPhone } from '@/utils/validateData'
-
 import { connect } from '@tarojs/redux'
 import Header from '@/components/header'
 import FormCom from '@/components/formCom'
-import Message from '@/components/message'
 import Loading from '@/components/loading'
 import { validationTips } from '@/assets/constants/formValidation'
 
@@ -55,7 +53,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 @connect(mapStateToProps, mapDispatchToProps)
 
-export default class LogIn extends Component {
+export default class Register extends Component {
 
   constructor () {
     super(...arguments)
@@ -75,6 +73,7 @@ export default class LogIn extends Component {
   componentWillMount () { 
     Taro.getSetting({
       success: res => {
+        console.log(res,'getSetting res')
         let isAuthorize = true;
         if( res.authSetting){
           isAuthorize = res.authSetting['scope.userInfo']
@@ -97,17 +96,8 @@ export default class LogIn extends Component {
 
   componentDidHide () { }
 
-
-  onRegistClick(){
-    console.log('register')
-    Taro.navigateTo({
-      url: `/pages/register/index`,
-    })
-  }
-
-  
-
   getVerifyCode = (phone) =>{
+    console.log(phone, 'getVerifyCode')
     if(isPhone(phone)){
       this.props.getVerifyCode && this.props.getVerifyCode({phone})
     }else{
@@ -140,10 +130,12 @@ export default class LogIn extends Component {
   }
 
   getUserInfo = () =>{
+    console.log('onAuthorize')
     let jsCode = ''
     Taro.login({
       success: res => {
         if (res.code) {
+          console.log(res,'login res')
           jsCode = res.code
           this.getUserCode(jsCode)
         }else{
@@ -164,6 +156,7 @@ export default class LogIn extends Component {
       complete: res => {
         iv = res.iv;
         encryptedData = res.encryptedData
+        console.log(res,'getUserCode res')
         let query = {
           iv,
           jsCode,
@@ -179,14 +172,9 @@ export default class LogIn extends Component {
     })
   }
 
-  handleMessageConfirm = () =>{
-    this.props.updateGlobalData && this.props.updateGlobalData()
-  }
-
   render () {
-    const { isAuthorize } = this.state
-    const { isMessage, message, loadingList } = this.props
-    const tabList = [{ title: '验证码登录' }, { title: '密码登录' }]
+    const { loadingList } = this.props
+    console.log(loadingList,'loadingList')
     const formComProps = {
       key:'formComProps1',
       data:[
@@ -200,6 +188,28 @@ export default class LogIn extends Component {
             required:true,
             message:validationTips.phoneTip
           },
+        },
+        {
+          comType:'input',
+          comSubType:'password',
+          name:'password',
+          placeholder:'请输入密码',
+          type:'confirmPasswword',
+          rules:{
+            required:true,
+            message:validationTips.passwwordTip
+          }
+        },
+        {
+          comType:'input',
+          comSubType:'password',
+          name:'confirmPasswword',
+          placeholder:'请确认密码',
+          type:'confirmPasswword',
+          rules:{
+            required:true,
+            message:validationTips.confirmPasswwordTip
+          }
         },
         {
           comType:'input',
@@ -218,86 +228,34 @@ export default class LogIn extends Component {
             method:this.getVerifyCode
 
           }
-        }
-      ],
-      onPropsSubmit:this.onSubmit,
-      leftBtnTxt:'登录',
-    }
-    const formComPropsTwo = {
-      key:'formComPropsTwo',
-      data:[
-        {
-          comType:'input',
-          comSubType:'text',
-          name:'memberNum',
-          placeholder:'请输入会员卡号',
-          type:'phone',
-          rules:{
-            required:true,
-            message:validationTips.phoneTip
-          },
         },
         {
           comType:'input',
-          comSubType:'password',
-          name:'password',
-          placeholder:'请输入密码',
-          type:'passwword',
+          comSubType:'text',
+          name:'phone',
+          placeholder:'请输入昵称',
+          type:'auto',
           rules:{
             required:true,
-            message:validationTips.passwwordTip
-          }
-        }
+            message:validationTips.emptyTip
+          },
+        },
+
       ],
       onPropsSubmit:this.onSubmit,
       leftBtnTxt:'登录',
     }
-    const MessageProps ={
-      isMessage, 
-      message,
-      handleConfirm:this.handleMessageConfirm
-    }
-
     let list = []
     list.push(loadingList['global/getUserData'])
     const loadingProps = {
       list
     }
     return (
-      <View className='logIn page'>
-        <Header />
-        <Text className='register' onClick={this.onRegistClick}> 注册</Text>
-        <View className='logInCon'>
-          <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick.bind(this)}>
-            <AtTabsPane current={this.state.current} index={0} >
-              <View className='logInConPane'  >
-                <FormCom {...formComProps}/>
-              </View>
-            </AtTabsPane>
-            <AtTabsPane current={this.state.current} index={1}>
-            <View className='logInConPane'  >
-                <FormCom {...formComPropsTwo} />
-              </View>
-            </AtTabsPane>
-          </AtTabs>
+      <View className='register page'>
+        <View className='registerCon'>
+          <FormCom {...formComProps}/>
         </View>
-      
-        {
-          !isAuthorize && 
-          <button
-            className='authorizeBtn globalBtn' 
-            onClick = { this.onAuthorize}
-            open-type="getUserInfo"
-          >
-            用户请授权
-          </button>
-        }
-        <Message { ...MessageProps } />
         <Loading { ...loadingProps} />
-        {/* <open-data type="groupName" open-gid="xxxxxx"></open-data>
-<open-data type="userAvatarUrl"></open-data>
-<open-data type="userGender" lang="zh_CN"></open-data> */}
-
       </View>
     )
   }

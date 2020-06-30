@@ -1,27 +1,15 @@
 /**
  * 接口响应，最外层统一格式
  */
-export  const logInModel =[
+export  const UserDataModel =[
     {
-      name:'id',
+      name:'openId',
       type:'String'
     },
     {
-      name:'data',
-      type:'Object',
-      childen:[
-        {
-          name:'data',
-          type:'Object'
-          
-        }
-      ]
-    },
-    {
-      name:'data',
-      type:'Object'
+      name:'unionId',
+      type:'String'
     }
-    
   ]
 
 

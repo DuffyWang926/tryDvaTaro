@@ -29,7 +29,9 @@ class App extends Component {
       'pages/shopping/index',
       'pages/trolley/index',
       'pages/user/index',
-      'pages/logIn/index'
+      'pages/logIn/index',
+      'pages/register/index',
+      
     ],
     window: {
       backgroundTextStyle: 'light',
