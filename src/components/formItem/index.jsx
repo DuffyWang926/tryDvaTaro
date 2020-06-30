@@ -29,7 +29,9 @@ export default function FormItem (props){
           rules = {}, 
           comSubType , 
           index, 
-          endData = {}, 
+          endData = {},
+          connectIndex,
+          data
         } = props
   const { required, message } = rules 
   const { endType,  endTxt,  endColor } = endData
@@ -48,7 +50,8 @@ export default function FormItem (props){
   function validateData(){
     const { value } = state
     let isTip = false
-    debugger
+    
+
     switch(type){
       case 'phone':
         isTip = !isPhone(value)
@@ -61,6 +64,13 @@ export default function FormItem (props){
       case 'confirmPasswword':
         if(!value){
           isTip = true
+        }else{
+          if(connectIndex){
+            let lastValue = data[connectIndex].formValue
+            if(lastValue !== value){
+              isTip = true
+            }
+          }
         }
         break;
       case 'auto':
@@ -100,16 +110,18 @@ export default function FormItem (props){
     const { handleEndClick } = props
     handleEndClick && handleEndClick(index)
     if(endType == 'btn'){
-      setIsEndBtn(true)
-      let cb = () =>{
-        setIsEndBtn(false)
-        setState({...state,time:59})
+      if(connectIndex){
+        let lastValue = data[connectIndex].formValue
+        if( lastValue ){
+          setIsEndBtn(true)
+          let cb = () =>{
+            setIsEndBtn(false)
+            setState({...state,time:59})
+          }
+            countTime(countNum,cb,1)
+        }
       }
-
-        countTime(countNum,cb,1)
     }
-
-
   }
   
   let num = state.time

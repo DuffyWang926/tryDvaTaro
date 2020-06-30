@@ -123,7 +123,7 @@ export default class LogIn extends Component {
     const { isAuthorize } = this.state
     
     if(isAuthorize){
-      this.getUserInfo()
+      this.getUserInfo(val)
       if(val.phone){
         val.memberNum = ''
       }else{
@@ -139,13 +139,13 @@ export default class LogIn extends Component {
     }
   }
 
-  getUserInfo = () =>{
+  getUserInfo = (val) =>{
     let jsCode = ''
     Taro.login({
       success: res => {
         if (res.code) {
           jsCode = res.code
-          this.getUserCode(jsCode)
+          this.getUserCode(jsCode, val)
         }else{
           Taro.showToast({
             title: '登录失败!',
@@ -157,7 +157,7 @@ export default class LogIn extends Component {
     })
   }
 
-  getUserCode = (jsCode) =>{
+  getUserCode = (jsCode, val) =>{
     let iv = ''
     let encryptedData = ''
     Taro.getUserInfo({
@@ -167,7 +167,8 @@ export default class LogIn extends Component {
         let query = {
           iv,
           jsCode,
-          encryptedData
+          encryptedData,
+          params:val
         }
         // let query = {
         //   iv:'BqEaWOYGPi20IALue7ViAw==',

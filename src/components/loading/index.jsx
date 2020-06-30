@@ -11,7 +11,6 @@ export default function Loading (props){
       flag = true
     }
   })
-  debugger
   if(flag){
     Taro.showLoading({
       title: '加载中',

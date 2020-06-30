@@ -52,14 +52,9 @@ export default function FormCom (props){
   }
 
   function handleEndClick ( key){
-    const { endData = {} } = data[key]
+    const { endData = {}, connectIndex } = data[key]
     const { method } = endData
-    let phone = ''
-    dataInit.map((v,i) => {
-      if(v.type === 'phone'){
-        phone = v.formValue
-      }
-    })
+    let phone = dataInit[connectIndex].formValue
     method && method(phone)
   }
   
@@ -81,6 +76,7 @@ export default function FormCom (props){
                         index={i} 
                         getItemData={ getItemData } 
                         handleEndClick = { handleEndClick }
+                        data = {dataInit}
                       />
             })
           }

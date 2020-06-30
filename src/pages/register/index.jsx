@@ -58,16 +58,13 @@ export default class Register extends Component {
   constructor () {
     super(...arguments)
     this.state = {
-      current: 0,
       isAuthorize:true
 
     }
   }
 
-  handleClick (value) {
-    this.setState({
-      current: value
-    })
+  config = {
+    navigationBarTitleText: '注册'
   }
 
   componentWillMount () { 
@@ -85,16 +82,6 @@ export default class Register extends Component {
     })
   }
 
-  componentDidMount () { 
-    
-    
-  }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   getVerifyCode = (phone) =>{
     console.log(phone, 'getVerifyCode')
@@ -111,15 +98,10 @@ export default class Register extends Component {
 
   onSubmit = (val) =>{
     const { isAuthorize } = this.state
-    
     if(isAuthorize){
-      this.getUserInfo()
-      if(val.phone){
-        val.memberNum = ''
-      }else{
-        val.phone = ''
-      }
+      this.getUserInfo(val)
       this.props.updateGlobalData && this.props.updateGlobalData(val)
+      
     }else{
       Taro.showToast({
         title: '请授权',
@@ -129,7 +111,7 @@ export default class Register extends Component {
     }
   }
 
-  getUserInfo = () =>{
+  getUserInfo = (val) =>{
     console.log('onAuthorize')
     let jsCode = ''
     Taro.login({
@@ -137,7 +119,7 @@ export default class Register extends Component {
         if (res.code) {
           console.log(res,'login res')
           jsCode = res.code
-          this.getUserCode(jsCode)
+          this.getUserCode(jsCode, val)
         }else{
           Taro.showToast({
             title: '登录失败!',
@@ -149,7 +131,7 @@ export default class Register extends Component {
     })
   }
 
-  getUserCode = (jsCode) =>{
+  getUserCode = (jsCode, val) =>{
     let iv = ''
     let encryptedData = ''
     Taro.getUserInfo({
@@ -160,7 +142,8 @@ export default class Register extends Component {
         let query = {
           iv,
           jsCode,
-          encryptedData
+          encryptedData,
+          params:val
         }
         // let query = {
         //   iv:'BqEaWOYGPi20IALue7ViAw==',
@@ -206,6 +189,7 @@ export default class Register extends Component {
           name:'confirmPasswword',
           placeholder:'请确认密码',
           type:'confirmPasswword',
+          connectIndex:1,
           rules:{
             required:true,
             message:validationTips.confirmPasswwordTip
@@ -217,6 +201,7 @@ export default class Register extends Component {
           name:'vcode',
           placeholder:'请输入验证码',
           type:'auto',
+          connectIndex:0,
           rules:{
             required:true,
             message:validationTips.codeTip
@@ -232,7 +217,7 @@ export default class Register extends Component {
         {
           comType:'input',
           comSubType:'text',
-          name:'phone',
+          name:'nikename',
           placeholder:'请输入昵称',
           type:'auto',
           rules:{
@@ -243,7 +228,7 @@ export default class Register extends Component {
 
       ],
       onPropsSubmit:this.onSubmit,
-      leftBtnTxt:'登录',
+      leftBtnTxt:'注册',
     }
     let list = []
     list.push(loadingList['global/getUserData'])
@@ -255,6 +240,16 @@ export default class Register extends Component {
         <View className='registerCon'>
           <FormCom {...formComProps}/>
         </View>
+        {
+          !isAuthorize && 
+          <button
+            className='authorizeBtn globalBtn' 
+            onClick = { this.onAuthorize}
+            open-type="getUserInfo"
+          >
+            用户请授权
+          </button>
+        }
         <Loading { ...loadingProps} />
       </View>
     )

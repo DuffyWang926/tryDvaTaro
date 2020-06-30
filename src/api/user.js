@@ -3,7 +3,8 @@ import {
           getUserUrl, 
           verifyCodeUrl, 
           logInDataUrl,
-          getMemberLogInUrl
+          getMemberLogInUrl,
+          getRegisterUrl
         } from '@/url/index'
 
 export async function getUserDataApi(payload) {
@@ -33,6 +34,14 @@ export async function getLogInData(payload) {
 export async function getMemberLogInData(payload) {
   return request({
     url:getMemberLogInUrl,
+    data:payload,
+    method:'post'
+  });
+}
+
+export async function getRegisterData(payload) {
+  return request({
+    url:getRegisterUrl,
     data:payload,
     method:'post'
   });
