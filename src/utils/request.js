@@ -46,7 +46,7 @@ export default (options = { method: 'GET', data: {} }) => {
           res.data
         );
       }
-      if (data.status !== 'ok') {
+      if ( res.is_succ == '0' ) {
         let message = res.data && res.data.error && res.data.error.message || 'error'
         Taro.showToast({
           title: `${message}~`,

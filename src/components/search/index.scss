@@ -1,0 +1,83 @@
+@import '@/assets/sass/custom.scss';
+.search{
+    // position: relative;
+    .searchItem{
+        height:60rpx;
+        display: flex;
+        .searchIcon{
+            padding-left: 10rpx;
+            width:50rpx;
+            background: #fff;
+            height: 100%;
+            display:flex;
+            align-items: center;
+            border-radius: 60rpx 0 0 60rpx;
+            border:1rpx solid gainsboro;
+            border-right:none;
+            box-sizing: border-box;
+        }
+        .searchEnd{
+            height: 100%;
+            background: #fff;
+            line-height: 60rpx;
+            padding:0 60rpx;
+            // margin-left: 30rpx;
+            border-radius: 60rpx;
+        }
+        at-input{
+            flex:1;
+            background: #fff;
+            height:60rpx;
+            border-radius: 0 60rpx 60rpx 0;
+            border:1rpx solid gainsboro;
+            border-left:none;
+            background: #fff;
+            // border-bottom: none;
+            padding:0 16rpx 0 6rpx;
+            box-sizing: border-box;
+        }
+        
+
+    }
+    
+    .searchList{
+        border-radius: 10rpx;
+        background: #fff;
+        border:1rpx solid gainsboro;
+        border-top:none;
+        margin:0 20rpx;
+        padding:10rpx;
+        .history{
+            .historyTop{
+                display:flex;
+                justify-content: space-between;
+                font-size: $bigSize;
+            }
+            .historyList{
+                at-button{
+                    padding:6rpx;
+                    margin: 0 6rpx;
+                    display: inline-block;
+                    text-align: center;
+
+                }
+                
+            }
+        }
+        .hot{
+            .hotTop{
+                font-size: $bigSize;
+            }
+            .hotList{
+                at-button{
+                    padding:6rpx;
+                    margin: 0 6rpx;
+                    display: inline-block;
+                    text-align: center;
+
+                }
+            }
+        }
+
+    }
+}

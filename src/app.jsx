@@ -31,6 +31,7 @@ class App extends Component {
       'pages/user/index',
       'pages/logIn/index',
       'pages/register/index',
+      'pages/search/index',
       
     ],
     window: {
@@ -44,26 +45,26 @@ class App extends Component {
         {
           pagePath: 'pages/index/index',
           text: '首页',
-          // iconPath: './images/tab/home.png',
-          // selectedIconPath: './images/tab/home-active.png',
+          iconPath: './assets/images/img/icon_normal1.png',
+          selectedIconPath: './assets/images/img/icon_select1.png',
         },
         {
           pagePath: 'pages/shopping/index',
           text: '分类',
-          // iconPath: './images/tab/cart.png',
-          // selectedIconPath: './images/tab/cart-active.png',
+          iconPath: './assets/images/img/icon_normal2.png',
+          selectedIconPath: './assets/images/img/icon_select2.png',
         },
         {
           pagePath: 'pages/trolley/index',
           text: '购物车',
-          // iconPath: './images/tab/user.png',
-          // selectedIconPath: './images/tab/user-active.png',
+          iconPath: './assets/images/img/icon_normal3.png',
+          selectedIconPath: './assets/images/img/icon_select3.png',
         },
         {
           pagePath: 'pages/user/index',
           text: '我的',
-          // iconPath: './images/tab/user.png',
-          // selectedIconPath: './images/tab/user-active.png',
+          iconPath: './assets/images/img/icon_normal4.png',
+          selectedIconPath: './assets/images/img/icon_select4.png',
         },
       ],
     }

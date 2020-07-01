@@ -3,7 +3,8 @@ import {
     getVerifyCodeData, 
     getLogInData, 
     getMemberLogInData,
-    getRegisterData
+    getRegisterData,
+    getHotListData
 } from '@/api/index';
 import { confirmData } from '@/utils'
 import { UserDataModel} from '@/model'
@@ -20,6 +21,8 @@ export default {
         memberNum:'',
         password:'',
         nikename:'',
+        historyList:[],
+        hotList:[]
     },
     effects: {
         
@@ -105,6 +108,15 @@ export default {
             })
           }
         },
+        *getHotList({ payload }, { call, put }) {
+            const res = yield call(getHotListData, payload)
+            let  hotList = res.data && res.data.hotSearchs
+            yield put({
+                type:'updateGlobalData',
+                payload:{hotList}
+            })
+        },
+        
     },
     reducers: {
         getUserDataAction(state, action) {

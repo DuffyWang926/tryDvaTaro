@@ -4,7 +4,8 @@ import {
           verifyCodeUrl, 
           logInDataUrl,
           getMemberLogInUrl,
-          getRegisterUrl
+          getRegisterUrl,
+          getHotListUrl
         } from '@/url/index'
 
 export async function getUserDataApi(payload) {
@@ -42,6 +43,14 @@ export async function getMemberLogInData(payload) {
 export async function getRegisterData(payload) {
   return request({
     url:getRegisterUrl,
+    data:payload,
+    method:'post'
+  });
+}
+
+export async function getHotListData(payload) {
+  return request({
+    url:getHotListUrl,
     data:payload,
     method:'post'
   });

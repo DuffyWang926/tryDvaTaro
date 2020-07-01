@@ -10,7 +10,6 @@ import Search from '@/components/search'
 const namespace = 'global'
 
 const mapStateToProps = (state) => {
-  // console.log( state, 'global state')
   return {
     ...state[namespace],
     
@@ -20,15 +19,15 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     
-    getUserData: (query) => {
+    updateGlobalData: (query) => {
       dispatch({
-        type: `${namespace}/getUserData`,
+        type: `${namespace}/updateGlobalData`,
         payload: query,
       });
     },
-    getUserDataAction: (query) => {
+    getHotList: (query) => {
       dispatch({
-        type: `${namespace}/getUserDataAction`,
+        type: `${namespace}/getHotList`,
         payload: query,
       });
     }
@@ -41,11 +40,14 @@ export default class Index extends PureComponent {
   constructor () {
     super(...arguments)
     this.state = {
+     
 
     }
   }
 
-  componentWillMount () { }
+  componentWillMount () { 
+    this.props.getHotList && this.props.getHotList()
+  }
 
   componentDidMount () {   
   }
@@ -57,26 +59,39 @@ export default class Index extends PureComponent {
   componentDidHide () { }
 
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '搜索'
   }
 
-  onSearchInputClick = () =>{
-    Taro.navigateTo({
-      url:'/pages/search/index'
-    })
-    debugger
+
+  getInputValue = (val) =>{
+    console.log(val,'getInputValue')
   }
 
+  getInputEndValue = (val) =>{
+    console.log(val,'getInputEndValue')
+    const { historyList } = this.props
+    if(!historyList.includes(val)){
+      historyList.push(val)
+    }
+    this.props.updateGlobalData && this.props.updateGlobalData(historyList)
+  }
+  
 
   render () {
+    const { historyList, hotList } = this.props
+
     const searchProps = {
-      placeholder:'圣诞节礼物',
-      isShow:false,
-      method:this.onSearchInputClick,
+      placeholder:'商品关键字或编号',
+      isShow:true,
+      historyList,
+      hotList,
+      getInputValue:this.getInputValue,
+      getInputEndValue:this.getInputEndValue
+
     }
     return (
       <View 
-        className='index page'
+        className='search page'
       >
         <Header />
         <Search 

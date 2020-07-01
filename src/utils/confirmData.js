@@ -13,8 +13,6 @@ export const confirmData = (model, data) =>{
             return confirmData(v.children, data[v.name])
         }
     })
-
-
 }
 
 export const cloneDeep = (data) =>{
@@ -42,7 +40,7 @@ export const countTime = (fn,cb,n) =>{
 
   }
 
-  function * throttle(func, time) {
+export function * throttle(func, time) {
     let timerID = null;
     function throttled(arg) {
       clearTimeout(timerID);
@@ -50,4 +48,14 @@ export const countTime = (fn,cb,n) =>{
     }
     while (true)
       throttled(yield);
+  }
+
+
+export  function debounce(timeoutId, fn, context, ms = 500, arg) {
+    
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => {
+        fn.apply(context, arg)
+    }, ms)
+    return timeoutId
   }

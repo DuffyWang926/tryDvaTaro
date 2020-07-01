@@ -13,7 +13,6 @@ const initialState = {
   },
   value:'',
   time: 59
-  
 }
 export default function FormItem (props){
   const [state, setState] = useState(initialState);
