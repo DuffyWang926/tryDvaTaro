@@ -32,7 +32,7 @@ class App extends Component {
       'pages/logIn/index',
       'pages/register/index',
       'pages/search/index',
-      
+      'pages/message/index',
     ],
     window: {
       backgroundTextStyle: 'light',

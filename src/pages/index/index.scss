@@ -1,0 +1,23 @@
+.index{
+    .indexTop{
+        display: flex;
+        .indexSearch{
+            flex:1;
+        }
+        .indexMsg{
+            width:60rpx;
+            height:60rpx;
+            margin:0 20rpx 0 40rpx;
+            image{
+                width:100%;
+                height:100%;
+            }
+        }
+
+    }
+
+    .banner{
+        height:400rpx;
+        width:100%;
+    }
+}
