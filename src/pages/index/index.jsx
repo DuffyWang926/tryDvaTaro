@@ -6,6 +6,7 @@ import './index.scss'
 import { connect } from '@tarojs/redux'
 import Header from '@/components/header'
 import Search from '@/components/search'
+import ProductListCom from '@/components/productListCom'
 import msgSvg from '@/assets/images/svg/msg.svg'
 
 const namespace = 'home'
@@ -26,7 +27,12 @@ const mapDispatchToProps = (dispatch) => {
         payload: query,
       });
     },
-    
+    getLiveList: (query) => {
+      dispatch({
+        type: `${namespace}/getLiveList`,
+        payload: query,
+      });
+    }
   }
 };
 @connect(mapStateToProps, mapDispatchToProps)
@@ -41,7 +47,12 @@ export default class Index extends PureComponent {
   }
 
   componentWillMount () {
-    this.props.getBannerList && this.props.getBannerList()
+    this.props.getBannerList && this.props.getBannerList({})
+    this.props.getLiveList && this.props.getLiveList()
+    let test = () =>{
+
+    }
+    // test()
    }
 
   componentDidMount () {   
@@ -69,22 +80,48 @@ export default class Index extends PureComponent {
     })
   }
 
-  onBannerClick = () =>{
-    console.log('onBannerClick')
+  onBannerClick = (v) =>{
+    Taro.navigateTo({
+      url:`/pages/productList/index?type=${v.indexType}&&id=${v.id}`
+    })
   }
+
+  onActivityClick = (v) =>{
+    Taro.navigateTo({
+      url:`/pages/productList/index?type=${v.indexType}&&id=${v.id}`
+    })
+  }
+
+  
 
 
   render () {
+    const { bannerList = [], activityList = [], typeList = [], liveList = [] } = this.props
     const searchProps = {
       placeholder:'圣诞节礼物',
       isShow:false,
       method:this.onSearchInputClick,
+    }
+    let homeLiveList = []
+    if( liveList.length > 2){
+      homeLiveList.push(liveList[0])
+      homeLiveList.push(liveList[1])
+      homeLiveList.push(liveList[2])
+    }
+    console.log(this.state,'state')
+    const liveListProps = {
+      name:'荐康客直播间',
+      url:'',
+      products:homeLiveList,
+      isLive:true
+
     }
     return (
       <View 
         className='index page'
       >
         <Header />
+         <View className='backgound'></View>
         <View 
           className='indexTop'
         >
@@ -113,19 +150,36 @@ export default class Index extends PureComponent {
               indicatorDots
               autoplay
             >
-              <SwiperItem onClick={this.onBannerClick}>
-                <View className='demo-text-1'>1</View>
-              </SwiperItem>
-              <SwiperItem>
-                <View className='demo-text-2'>2</View>
-              </SwiperItem>
-              <SwiperItem>
-                <View className='demo-text-3'>3</View>
-              </SwiperItem>
+              {
+                bannerList.map((v,i) =>{
+                 return <SwiperItem 
+                            className='swiperItem' key={i + 'banner'} 
+                            onClick={ e => this.onBannerClick(v)}
+                        >
+                              <Image src={v.img} />
+                            </SwiperItem>
+                  
+                })
+              }
             </Swiper>
           </View>
-        
-
+        <View className='activity'>
+          {
+            activityList.map((v,i) =>{
+              return <Image 
+                        src = {v.img}
+                        onClick = { e => this.onActivityClick(v)}
+                        key = {i + 'image'}
+                      /> 
+            })
+          }
+        </View>
+        {/* <ProductListCom {...liveListProps} key= 'liveListProps' /> */}
+        {
+          typeList.map((v,i) =>{
+            return <ProductListCom {...v} key={i + 'productListCom'} />
+          })
+        }
 
       </View>
     )

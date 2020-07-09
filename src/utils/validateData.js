@@ -5,6 +5,13 @@ function isPhone(value) {
        return true
     }
   }
+function isTeleAndPhone(value) {
+  if (!/^1(3|4|5|7|6|8)\d{9}$/.test(value) || !(/^1[34578]\d{9}$/.test(value))) {
+    return false
+  } else {
+      return true
+  }
+}
    
   //验证码六位数校验
   function isSixNum(value) {
@@ -92,5 +99,6 @@ function isPhone(value) {
     isPhone: isPhone,
     isSixNum: isSixNum,
     isCard: isCard,
-    IdentityIDCard: IdentityIDCard
+    IdentityIDCard: IdentityIDCard,
+    isTeleAndPhone
   }

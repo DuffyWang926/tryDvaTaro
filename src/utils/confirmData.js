@@ -3,11 +3,20 @@ export const confirmData = (model, data) =>{
     Array.isArray(model) && model.map((v,i) =>{
         if(!v.children){
             let value = data[v.name]
+            let valueType = Object.prototype.toString.call(value).slice(8,-1)
             console.log(Object.prototype.toString.call(value).slice(8,-1), v.type)
             if(value === undefined){
-                console.error( `${v.name} of response is wrong`)
-            }else if(Object.prototype.toString.call(value).slice(8,-1) !== v.type){
-                console.error( `${v.name} of response is wrong`)
+                console.error( `${v} ${i} ${v.name}  of response is wrong`)
+            }else if(valueType !== v.type){
+                console.error( `${v} ${i} ${v.name}  of response is wrong`)
+            }else if(valueType === 'Array'){
+                if(v.ArrayModel){
+                    value.map((val,key) =>{
+                        confirmData(v.ArrayModel, val)
+    
+                    })
+                }
+
             }
         }else{
             return confirmData(v.children, data[v.name])

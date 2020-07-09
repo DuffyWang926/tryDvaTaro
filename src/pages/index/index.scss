@@ -1,4 +1,15 @@
 .index{
+    height:100%;
+    position: relative;
+    .backgound{
+        width:100%;
+        height:100%;
+        background:whitesmoke;
+        position: absolute;
+        left:0;
+        top:0;
+        z-index: -2;
+    }
     .indexTop{
         display: flex;
         .indexSearch{
@@ -17,7 +28,31 @@
     }
 
     .banner{
-        height:400rpx;
+        height:450rpx;
         width:100%;
+        padding:10rpx 0 0 0;
+        swiper{
+            height:450rpx;
+            .swiperItem{
+                border-radius: 10rpx;
+                image{
+                    border-radius: 10rpx;
+                    width:100%;
+                    height:100%;
+                }
+            }
+        }
+    }
+    .activity{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding:20rpx 0 0 0;
+        height: 200rpx;
+        image{
+            width:48%;
+            height:100%;
+            border-radius: 10rpx;
+        }
     }
 }

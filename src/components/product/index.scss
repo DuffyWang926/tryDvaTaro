@@ -1,0 +1,103 @@
+@import '@/assets/sass/custom.scss';
+@import '@/assets/sass/global.scss';
+@import "~taro-ui/dist/style/components/form.scss";
+
+.productList{
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding:0 10rpx;
+    justify-content: space-between;
+    .product{
+        width:100%;
+        height:100%;
+        padding:6rpx;
+        box-sizing: border-box;
+        background: #fff;
+    
+        .productView{
+            width:100%;
+            height: 220rpx;
+            border-radius: 10rpx;
+            .productImg{
+                width:100%;
+                height:100%;
+                border-radius: 10rpx;
+            }
+        }
+        .productCon{
+            padding:6rpx 0 0 0;
+            .title{
+                font-size: $smallerSize;
+                font-weight: bold;
+                width:100%;
+                line-height: 1.5;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                white-space:nowrap;
+            }
+        }
+        .detailCon{
+            padding:6rpx 0 0 0;
+            .own{
+                border:1px solid $bgOrange;
+                color:$bgOrange;
+                padding:6rpx 10rpx ;
+                border-radius: 10rpx;
+                font-size: $minSize;
+                display: inline-block;
+                vertical-align: bottom;
+                margin-right: 10rpx;
+            }
+            .discount{
+                border:1px solid $bgBlue;
+                color:$bgBlue;
+                padding:6rpx 10rpx ;
+                border-radius: 10rpx;
+                font-size: $minSize;
+                display: inline-block;
+                vertical-align: bottom;
+            }
+            .point{
+                padding:6rpx 0 0 0;
+                font-size:$smallestSize;
+            }
+        }
+        .priceCon{
+            padding:10rpx 0 0 0;
+            display: flex;
+            .price{
+                font-size: $minusNorml;
+                font-weight: bold;
+                color:$bgOrange;
+                line-height: 1.5;
+                margin-right: 10rpx;
+            }
+            .oldPrice{
+                line-height: 1.5;
+                font-size: $smallestSize;
+                text-decoration: line-through;
+                color: $colorGrey;
+                align-self: center;
+            }
+            .addWrapper{
+                flex:1;
+                display: flex;
+                justify-content: flex-end;
+                align-content: center;
+                padding-right: 20rpx;
+                .add{
+                    border-radius: 50%;
+                    background: $bgOrange;
+                    border:1px solid $bgOrange;
+                    color:#fff;
+                    width:40rpx;
+                    height:40rpx;
+                    line-height: 34rpx;
+                    text-align: center;
+                }
+            }
+        }
+        
+    }
+}
