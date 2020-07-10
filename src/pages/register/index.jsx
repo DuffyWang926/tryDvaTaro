@@ -70,7 +70,6 @@ export default class Register extends Component {
   componentWillMount () { 
     Taro.getSetting({
       success: res => {
-        console.log(res,'getSetting res')
         let isAuthorize = true;
         if( res.authSetting){
           isAuthorize = res.authSetting['scope.userInfo']
@@ -84,7 +83,6 @@ export default class Register extends Component {
 
 
   getVerifyCode = (phone) =>{
-    console.log(phone, 'getVerifyCode')
     if(isPhone(phone)){
       this.props.getVerifyCode && this.props.getVerifyCode({phone})
     }else{
@@ -112,12 +110,10 @@ export default class Register extends Component {
   }
 
   getUserInfo = (val) =>{
-    console.log('onAuthorize')
     let jsCode = ''
     Taro.login({
       success: res => {
         if (res.code) {
-          console.log(res,'login res')
           jsCode = res.code
           this.getUserCode(jsCode, val)
         }else{
@@ -138,7 +134,6 @@ export default class Register extends Component {
       complete: res => {
         iv = res.iv;
         encryptedData = res.encryptedData
-        console.log(res,'getUserCode res')
         let query = {
           iv,
           jsCode,
@@ -157,7 +152,6 @@ export default class Register extends Component {
 
   render () {
     const { loadingList } = this.props
-    console.log(loadingList,'loadingList')
     const formComProps = {
       key:'formComProps1',
       data:[

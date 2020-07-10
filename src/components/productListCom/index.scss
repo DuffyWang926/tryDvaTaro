@@ -2,20 +2,23 @@
 @import '@/assets/sass/global.scss';
 @import "~taro-ui/dist/style/components/form.scss";
 .productListCom{
-    padding:10rpx 0 0 0 ;
+    padding:10rpx 0 0 10rpx ;
     .listTop{
         display:flex;
         justify-content: space-between;
         background: whitesmoke;
         padding:30rpx 0;
+        margin:0 10rpx;
         .title{
             font-size: $normalSize;
             font-weight: bold;
+            padding:0 10rpx;
         }
         .more{
             font-size: $smallestSize;
             color:$textGrey;
             align-self: center;
+            padding-right: 10rpx;
         }
 
     }

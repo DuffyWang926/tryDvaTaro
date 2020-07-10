@@ -10,10 +10,12 @@ import ProductListCom from '@/components/productListCom'
 import msgSvg from '@/assets/images/svg/msg.svg'
 
 const namespace = 'home'
+const namespaceGlobal = 'global'
 
 const mapStateToProps = (state) => {
   return {
     ...state[namespace],
+    ...state[namespaceGlobal],
     
   };
 };
@@ -32,7 +34,20 @@ const mapDispatchToProps = (dispatch) => {
         type: `${namespace}/getLiveList`,
         payload: query,
       });
-    }
+    },
+    addCartsData: (query) => {
+      dispatch({
+        type: `${namespaceGlobal}/addCartsData`,
+        payload: query,
+      });
+    },
+    updateGlobalData: (query) => {
+      dispatch({
+        type: `${namespaceGlobal}/updateGlobalData`,
+        payload: query,
+      });
+    },
+    
   }
 };
 @connect(mapStateToProps, mapDispatchToProps)
@@ -49,6 +64,20 @@ export default class Index extends PureComponent {
   componentWillMount () {
     this.props.getBannerList && this.props.getBannerList({})
     this.props.getLiveList && this.props.getLiveList()
+    try {
+      const res = Taro.getSystemInfoSync()
+      let query = {
+        windowWidth:res.windowWidth,
+        windowHeight:res.windowHeight,
+        navHeight:res.statusBarHeight,
+        navTop:res.safeArea && res.safeArea.top
+      }
+      this.props.updateGlobalData && this.props.updateGlobalData(query)
+
+    } catch (e) {
+      // Do something when catch error
+    }
+    
     let test = () =>{
 
     }
@@ -58,9 +87,25 @@ export default class Index extends PureComponent {
   componentDidMount () {   
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    const { cartSum } = this.props
+    const nextSum = nextProps.cartSum
+    if(nextSum !== cartSum){
+      Taro.setTabBarBadge({
+        index: 2,
+        text: '' + nextSum 
+      })
+    }
+    
+
+  }
+
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () { 
+    
+
+  }
 
   componentDidHide () { }
 
@@ -92,11 +137,23 @@ export default class Index extends PureComponent {
     })
   }
 
+  changeCart =(val) =>{
+    this.props.addCartsData && this.props.addCartsData(val)
+  }
+
   
 
 
   render () {
-    const { bannerList = [], activityList = [], typeList = [], liveList = [] } = this.props
+    const { 
+            bannerList = [], 
+            activityList = [], 
+            typeList = [], 
+            liveList = [] , 
+            cartSum,
+            windowWidth,
+            windowHeight,
+          } = this.props
     const searchProps = {
       placeholder:'圣诞节礼物',
       isShow:false,
@@ -108,13 +165,19 @@ export default class Index extends PureComponent {
       homeLiveList.push(liveList[1])
       homeLiveList.push(liveList[2])
     }
-    console.log(this.state,'state')
     const liveListProps = {
       name:'荐康客直播间',
       url:'',
       products:homeLiveList,
       isLive:true
 
+    }
+    let cartSumLeft = windowWidth/2 + windowWidth/4 -40+ 'px'
+    let cartSumTop = windowHeight-9 + 'px'
+
+    let cartSumStyle ={
+      left:cartSumLeft,
+      top:cartSumTop
     }
     return (
       <View 
@@ -177,7 +240,7 @@ export default class Index extends PureComponent {
         {/* <ProductListCom {...liveListProps} key= 'liveListProps' /> */}
         {
           typeList.map((v,i) =>{
-            return <ProductListCom {...v} key={i + 'productListCom'} />
+            return <ProductListCom {...v} key={i + 'productListCom'} method={this.changeCart}/>
           })
         }
 

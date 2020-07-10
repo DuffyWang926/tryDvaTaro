@@ -1,1 +1,17 @@
 @import "~taro-ui/dist/style/components/tabs.scss";
+@import '@/assets/sass/custom.scss';
+.shopping{
+    height:100%;
+    width:100%;
+    .at-tabs__item{
+        
+        font-size: $normalSize;
+    }
+    .at-tabs__item--active {
+        color:$bgOrange;
+    }
+    .at-tabs__item-underline{
+        background:$bgOrange;
+    }
+        
+}

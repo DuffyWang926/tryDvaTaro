@@ -3,20 +3,15 @@ import { AtForm, AtInput, AtButton } from 'taro-ui'
 import { View, Text, Button } from '@tarojs/components'
 import './index.scss'
 import FormItem from '../formItem'
-import { cloneDeep } from '@/utils/confirmData'
 
-const initialState = {
-  dataInit:[]
-}
 export default function FormCom (props){
   const { data = [], message, onPropsSubmit, leftBtnTxt, isReset} = props
   
-  let dataInitTemp = cloneDeep(data)
-  const [dataInit, setDataInit] = useState(dataInitTemp);
-
+  const [dataInit = [], setDataInit] = useState(data);
   function onSubmit (event) {
     let isSubmit = true
     let propsResult = {}
+    
     dataInit.map((v,i) =>{
       if(v.rules){
         if(!v.isValid){

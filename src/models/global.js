@@ -6,7 +6,7 @@ import {
     getRegisterData,
     getHotListData
 } from '@/api/index';
-import { confirmData } from '@/utils'
+import { confirmData, cloneDeep } from '@/utils'
 import { UserDataModel} from '@/model'
 
 export default {
@@ -22,7 +22,9 @@ export default {
         password:'',
         nikename:'',
         historyList:[],
-        hotList:[]
+        hotList:[],
+        cartList:[],
+        cartSum:0
     },
     effects: {
         
@@ -129,6 +131,26 @@ export default {
         },
         updateGlobalData(state, action) {
             return { ...state, ...action.payload};
+        },
+        addCartsData(state, action) {
+            let { cartList = []} = state
+            let data = action.payload
+            let isAdd = true
+            cartList.map((v,i) =>{
+                if(v.id == data.id){
+                    isAdd = false,
+                    v.cartNum++
+                }
+
+            })
+            if(isAdd){
+                data.cartNum = 1
+                cartList.push(data)
+            }
+            let cartSum = cartList.length
+            let cartListTemp = cloneDeep(cartList)
+
+            return { ...state, cartList:cartListTemp, cartSum};
         }
     },
 

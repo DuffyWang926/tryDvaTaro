@@ -12,7 +12,7 @@ const initialState = {
 }
 export default function ProductListCom (props){
   const [state, setState] = useState(initialState);
-  const { name, otherId, products = [], isLive} = props
+  const { name, otherId, products = [], isLive, showType, method} = props
   let columnType = 3
   if(otherId !== 3){
     columnType = 2
@@ -20,7 +20,9 @@ export default function ProductListCom (props){
 
   const productProps = {
     data:products,
-    columnType
+    columnType,
+    showType,
+    method
   }
   let roomSrc = ''
   let roomTitle = ''
@@ -43,8 +45,7 @@ export default function ProductListCom (props){
     })
 
   }
-  console.log(products)
-  debugger
+  
 
   const onLiveClick = (v) =>{
     let roomId = v.id
@@ -53,14 +54,28 @@ export default function ProductListCom (props){
     //     url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${customParams}`
     // })
   }
+  let listTopStyle = ''
+  let isMore = true
+  
+  if(showType == 1){
+    
+    listTopStyle = {
+      background:'#fff',
+      borderBottom:'1px solid #333'
+    }
+    isMore = false
+  }
 
 
 
   return (
     <View className='productListCom'>
-      <View className='listTop'>
+      <View className='listTop' style={listTopStyle}>
         <Text className='title'>{ name }</Text>
-        <Text className='more'>更多 {'>'}</Text>
+        {
+          isMore && <Text className='more'>更多 {'>'}</Text>
+        }
+        
       </View>
 
       { isLive ?

@@ -14,6 +14,7 @@
         padding:6rpx;
         box-sizing: border-box;
         background: #fff;
+        margin-bottom:10rpx;
     
         .productView{
             width:100%;
@@ -26,7 +27,8 @@
             }
         }
         .productCon{
-            padding:6rpx 0 0 0;
+            padding:6rpx 0 0 10rpx;
+            flex:1;
             .title{
                 font-size: $smallerSize;
                 font-weight: bold;

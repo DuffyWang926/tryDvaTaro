@@ -1,10 +1,9 @@
-export const confirmData = (model, data) =>{
+export function confirmData (model, data){
 
     Array.isArray(model) && model.map((v,i) =>{
         if(!v.children){
             let value = data[v.name]
             let valueType = Object.prototype.toString.call(value).slice(8,-1)
-            console.log(Object.prototype.toString.call(value).slice(8,-1), v.type)
             if(value === undefined){
                 console.error( `${v} ${i} ${v.name}  of response is wrong`)
             }else if(valueType !== v.type){
@@ -13,10 +12,8 @@ export const confirmData = (model, data) =>{
                 if(v.ArrayModel){
                     value.map((val,key) =>{
                         confirmData(v.ArrayModel, val)
-    
                     })
                 }
-
             }
         }else{
             return confirmData(v.children, data[v.name])
@@ -24,8 +21,53 @@ export const confirmData = (model, data) =>{
     })
 }
 
-export const cloneDeep = (data) =>{
-    return data
+export function cloneDeep (val) {
+    let valueType = Object.prototype.toString.call(val).slice(8,-1)
+    let root = {};
+    if(valueType === 'Array'){
+        root = []
+    }
+    // 栈
+    const loopList = [
+        {
+            parent: root,
+            key: undefined,
+            data: val,
+        }
+    ];
+
+    while(loopList.length) {
+        // 深度优先
+        const node = loopList.pop();
+        const parent = node.parent;
+        const key = node.key;
+        const data = node.data;
+
+        // 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
+        let res = parent;
+        if (typeof key !== 'undefined') {
+            res = parent[key] = {};
+        }
+
+        for(let k in data) {
+            if (data.hasOwnProperty(k)) {
+                if (typeof data[k] === 'object') {
+                    // 下一次循环
+                    loopList.push({
+                        parent: res,
+                        key: k,
+                        data: data[k],
+                    });
+                } else {
+                    res[k] = data[k];
+                }
+            }
+        }
+    }
+    
+
+    return root;
+    
 }
 
 export const countTime = (fn,cb,n) =>{

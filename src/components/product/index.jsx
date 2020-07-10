@@ -4,7 +4,8 @@ import { View, Text, Button } from '@tarojs/components'
 import './index.scss'
 
 export default function Product (props){
-  const { data = [], columnType, url} = props
+  const { data = [], columnType, url, showType, method} = props
+  
 
   let widthStyle = ''
   if(columnType === 3){
@@ -13,23 +14,40 @@ export default function Product (props){
     widthStyle = '48%'
   }
 
-  const onProdcutClick=(v) =>{
+  function onProdcutClick(v){
     Taro.navigateTo({
       url:`${url}?type=${v.indexType}&&id=${v.id}`
     })
   }
+  let productStyle = {width:widthStyle}
+  let productListStyle = ''
+  let imgStyle = ''
+  if(showType == 1){
+    productListStyle={flexDirection:'column'}
+    widthStyle = "90%"
+    productStyle = {
+          width:widthStyle,
+          display:'flex'
+        }
+    imgStyle = { width: '150rpx',height:'150rpx'}
+
+  }
+
+  function onAddClick(v){
+    method && method(v)
+  }
   
   return (
-    <View className='productList'>
+    <View className='productList' style={productListStyle} >
       {
         data.map((v,i) =>{
           return <View 
                     className='product' 
-                    style={{width:widthStyle}} 
+                    style={productStyle} 
                     key={i + 'product'}
                     onclick={e => onProdcutClick(v)}
                   >
-                  <View className='productView'>
+                  <View className='productView' style={imgStyle}>
                     <Image className='productImg' src={v.imgSrc} />
                   </View>
                   <View className='productCon'>
@@ -57,7 +75,7 @@ export default function Product (props){
                         {v.oldPrice}
                       </Text>
                       <View className='addWrapper'>
-                        <Text className='add'>
+                        <Text className='add' onClick={e => onAddClick(v)}>
                           +
                         </Text>
                       </View>

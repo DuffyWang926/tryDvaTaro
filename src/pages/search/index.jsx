@@ -64,11 +64,9 @@ export default class Index extends PureComponent {
 
 
   getInputValue = (val) =>{
-    console.log(val,'getInputValue')
   }
 
   getInputEndValue = (val) =>{
-    console.log(val,'getInputEndValue')
     const { historyList } = this.props
     if(!historyList.includes(val)){
       historyList.push(val)
