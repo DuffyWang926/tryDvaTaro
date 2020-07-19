@@ -5,7 +5,6 @@ import './index.scss'
 
 export default function Product (props){
   const { data = [], columnType, url, showType, method} = props
-  
 
   let widthStyle = ''
   if(columnType === 3){
@@ -22,7 +21,7 @@ export default function Product (props){
   let productStyle = {width:widthStyle}
   let productListStyle = ''
   let imgStyle = ''
-  if(showType == 1){
+  if(showType == 1 || showType == 2){
     productListStyle={flexDirection:'column'}
     widthStyle = "90%"
     productStyle = {
@@ -30,6 +29,9 @@ export default function Product (props){
           display:'flex'
         }
     imgStyle = { width: '150rpx',height:'150rpx'}
+    if(showType == 2){
+      imgStyle = { width: '250rpx',height:'250rpx'}
+    }
 
   }
 

@@ -1,12 +1,12 @@
 function isPhone(value) {
-    if (!/^1(3|4|5|7|6|8)\d{9}$/.test(value)) {
+    if (!/^1(3|4|5|7|6|8|9)\d{9}$/.test(value)) {
       return false
     } else {
        return true
     }
   }
 function isTeleAndPhone(value) {
-  if (!/^1(3|4|5|7|6|8)\d{9}$/.test(value) || !(/^1[34578]\d{9}$/.test(value))) {
+  if (!/^1(3|4|5|7|6|8|9)\d{9}$/.test(value) || !(/^1[34578]\d{9}$/.test(value))) {
     return false
   } else {
       return true

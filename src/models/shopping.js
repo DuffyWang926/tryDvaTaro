@@ -38,6 +38,7 @@ export default {
                                 point: str.minPoints,
                                 price: str.minNowPrice,
                                 oldPrice: str.minOldPrice,
+                                id:str.id
                             })
                         })
                         if(products.length > 0){

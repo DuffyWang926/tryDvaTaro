@@ -8,11 +8,12 @@ import ProductListCom from '@/components/productListCom'
 
 
 const namespace = 'shopping'
+const namespaceGlobal = 'global'
 
 const mapStateToProps = (state) => {
   return {
     ...state[namespace],
-    
+    ...state[namespaceGlobal],
   };
 };
 
@@ -24,7 +25,13 @@ const mapDispatchToProps = (dispatch) => {
         type: `${namespace}/getShopList`,
         payload: query,
       });
-    }
+    },
+    addCartsData: (query) => {
+      dispatch({
+        type: `${namespaceGlobal}/addCartsData`,
+        payload: query,
+      });
+    },
     
   }
 };
@@ -46,6 +53,17 @@ export default class Index extends Component {
     
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    const { cartSum } = this.props
+    const nextSum = nextProps.cartSum
+    if(nextSum !== cartSum){
+      Taro.setTabBarBadge({
+        index: 2,
+        text: '' + nextSum 
+      })
+    }
+  }
+
   componentWillUnmount () { }
 
   componentDidShow () { }
@@ -60,6 +78,10 @@ export default class Index extends Component {
     this.setState({
       current: value
     })
+  }
+
+  changeCart =(val) =>{
+    this.props.addCartsData && this.props.addCartsData(val)
   }
 
   render () {
@@ -77,7 +99,7 @@ export default class Index extends Component {
               return <AtTabsPane tabDirection='vertical' current={this.state.current} key={i+'AtTabsPane' }index={0}>
                         {
                           v.map((val,key) =>{
-                            return <ProductListCom {...val} key= {key + 'shopProductList'} />
+                            return <ProductListCom {...val} key= {key + 'shopProductList'} method={this.changeCart}/>
                           })
                         }
                     </AtTabsPane>

@@ -3,6 +3,7 @@ import { View, Text } from '@tarojs/components'
 import './index.scss'
 
 import { connect } from '@tarojs/redux'
+import Product from '@/components/product'
 
 
 const namespace = 'global'
@@ -17,12 +18,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     
-    getUserData: (query) => {
-      dispatch({
-        type: `${namespace}/getUserData`,
-        payload: query,
-      });
-    },
     getUserDataAction: (query) => {
       dispatch({
         type: `${namespace}/getUserDataAction`,
@@ -38,8 +33,6 @@ export default class Index extends Component {
   componentWillMount () { }
 
   componentDidMount () { 
-    this.props.getUserData && this.props.getUserData({id:'11'})
-    // this.props.getUserDataAction && this.props.getUserDataAction({id:'11'})
     
   }
 
@@ -54,9 +47,20 @@ export default class Index extends Component {
   }
 
   render () {
+    const { cartList = [] } = this.props
+    
     return (
-      <View className='index'>
-        <Text>trolley world!</Text>
+      <View className='trolley'>
+          {/* {
+          cartList.map((v,i) =>{
+            return <View className='trolleyItem'>
+                    <Product data={cartList} showType={2} />
+                  </View>
+          })
+        } */}
+        <View className='trolleyItem'>
+          <Product data={cartList} showType={2} />
+        </View>
       </View>
     )
   }
